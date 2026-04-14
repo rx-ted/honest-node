@@ -46,7 +46,9 @@ try {
   execSync(`git commit -m "chore(release): bump version to ${newVersion}"`, { stdio: 'inherit' });
   execSync(`git tag -a v${newVersion} -m "Release v${newVersion}"`, { stdio: 'inherit' });
   console.log(`Created tag: v${newVersion}`);
+  execSync('git push && git push --tags', { stdio: 'inherit' });
+  console.log('Pushed commits and tags to remote');
 } catch (error) {
-  console.error('Failed to commit/tag:', error.message);
+  console.error('Failed to commit/tag/push:', error.message);
   process.exit(1);
 }
