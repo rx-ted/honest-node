@@ -16,19 +16,16 @@ permissions:
 
 jobs:
   build:
-    name: Build & Check
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -43,22 +40,19 @@ jobs:
       - name: Build package
         run: pnpm build
 
-  publish-npm:
-    name: Publish to npm
+  publish:
     if: github.event_name == 'release'
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -72,4 +66,4 @@ jobs:
         run: pnpm build
 
       - name: Publish package
-        run: npm publish --access public
+        run: pnpm publish --access public --no-git-checks
