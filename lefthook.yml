@@ -7,3 +7,10 @@ pre-commit:
       run: pnpm lint
     check:
       run: pnpm check
+    build:
+      run: pnpm build
+
+post-commit:
+  commands:
+    bump-version:
+      run: node scripts/bump-version.mjs {1}
